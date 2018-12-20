@@ -135,6 +135,7 @@ fprintf('Theta computed from gradient descent - Trial 3: \n');
 fprintf(' %f \n', theta_trial_3);
 fprintf('\n');
 
+% Set theta to the best forming from the above trials
 theta = theta_trial_2;
 
 % Estimate the price of a 1650 sq-ft, 3 br house
