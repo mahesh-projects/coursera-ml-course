@@ -79,26 +79,63 @@ X = [ones(m, 1) X];
 % Hint: At prediction, make sure you do the same feature normalization.
 %
 
+% ============================================================
+% Trial 1: Find J for alpha = 0.01; num_iters = 400;
+
 fprintf('Running gradient descent ...\n');
 
-% Choose some alpha value
-alpha = 0.01;
-num_iters = 400;
 
 % Init Theta and Run Gradient Descent 
 theta = zeros(3, 1);
-[theta, J_history] = gradientDescentMulti(X, y, theta, alpha, num_iters);
+% ============================================================
+% Trial 2: Find J for alpha = 0.1; num_iters = 400;
+% ============================================================
+% Choose some alpha value
+alpha_trial_1 = 0.01;
+num_iters_trial_1 = 400;
+[theta_trial_1, J_history_trial_1] = gradientDescentMulti(X, y, theta, alpha_trial_1, num_iters_trial_1);
+
+
+% ============================================================
+% Trial 2: Find J for alpha = 0.1; num_iters = 400;
+% ============================================================
+alpha_trial_2 = 0.1;
+num_iters_trial_2 = 400;
+[theta_trial_2, J_history_trial_2] = gradientDescentMulti(X, y, theta, alpha_trial_2, num_iters_trial_2);
+
+% ============================================================
+% Trial 3: Find J for alpha = 0.001; num_iters = 400;
+% ============================================================
+alpha_trial_3 = 0.001;
+num_iters_trial_3 = 400;
+[theta_trial_3, J_history_trial_3] = gradientDescentMulti(X, y, theta, alpha_trial_3, num_iters_trial_3);
 
 % Plot the convergence graph
 figure;
-plot(1:numel(J_history), J_history, '-b', 'LineWidth', 2);
+hold on;
+plot(1:numel(J_history_trial_1), J_history_trial_1, '-b', 'LineWidth', 2);
+plot(1:numel(J_history_trial_2), J_history_trial_2, '-r', 'LineWidth', 2);
+plot(1:numel(J_history_trial_3), J_history_trial_3, '-k', 'LineWidth', 2);
 xlabel('Number of iterations');
 ylabel('Cost J');
+hold off;
 
 % Display gradient descent's result
-fprintf('Theta computed from gradient descent: \n');
-fprintf(' %f \n', theta);
+fprintf('Theta computed from gradient descent - Trial 1: \n');
+fprintf(' %f \n', theta_trial_1);
 fprintf('\n');
+
+% Display gradient descent's result
+fprintf('Theta computed from gradient descent - Trial 2: \n');
+fprintf(' %f \n', theta_trial_2);
+fprintf('\n');
+
+% Display gradient descent's result
+fprintf('Theta computed from gradient descent - Trial 3: \n');
+fprintf(' %f \n', theta_trial_3);
+fprintf('\n');
+
+theta = theta_trial_2;
 
 % Estimate the price of a 1650 sq-ft, 3 br house
 % ====================== YOUR CODE HERE ======================
