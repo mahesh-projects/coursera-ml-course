@@ -61,7 +61,7 @@ pause;
 X = [ones(m, 1) X];
 
 % Initialize fitting parameters
-initial_theta = zeros(n + 1, 1);
+initial_theta = zeros(n + 1, 1); % n+1 as we have added X0 column with value 1. Hence total columns is 3
 
 % Compute and display initial cost and gradient
 [cost, grad] = costFunction(initial_theta, X, y);

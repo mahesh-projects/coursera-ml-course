@@ -21,6 +21,20 @@ grad = zeros(size(theta));
 %
 
 
+g = sigmoid(X * theta); % Use the sigmoid function. Z = X * theta
+
+% Subsitute g in place of h(x)
+% Transpose -y and (1-y) for vectorization
+% sizes are as follows size(-y) = 100 * 1, size(log(g)) is 100 * 1, size of log(1-g) is 100 *1
+% J = (1/100) * [ [1 * 100] * [100 * 1] -  [1 * 100] * [100 * 1] ]
+% J is a scalar
+J = (1/m) * [ transpose(-1 .* y) * log(g) - transpose(1 - y) * log(1 - g) ];
+
+% grad = (1/100) * [3 * 100] * ([100 * 1] - [100 * 1])
+% size(grad) = [3, 1]
+grad = (1/m) * transpose(X) * (g - y) ;
+
+
 
 
 
