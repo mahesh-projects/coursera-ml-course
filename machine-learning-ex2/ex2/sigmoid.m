@@ -11,7 +11,7 @@ g = zeros(size(z));
 
 % Need to use . operator for division
 % Need to use exp() function 
-% size(g) = size(z)
+% size(g) = size(z) = [100 x 1]
 g = (1 ./ (1 + exp(-z)));
 
 
