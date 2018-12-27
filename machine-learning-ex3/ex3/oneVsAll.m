@@ -53,7 +53,7 @@ for c = 1:num_labels
     all_theta(c,:) = theta;
 endfor
 
-all_theta
+all_theta;
 
 
 
