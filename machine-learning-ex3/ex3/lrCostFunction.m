@@ -36,7 +36,25 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
+g = sigmoid(X * theta);
+theta_rem = theta(2:end,:);
 
+% Cost J = J_Unregularized + J_Regularized
+J_unregularized = (1/m) * [ transpose(-1 .* y) * log(g) - transpose(1 - y) * log(1 - g) ];
+
+J_regularized = (lambda / (2 * m)) * (transpose(theta_rem) * theta_rem);
+
+J = J_unregularized + J_regularized;
+
+
+% Grad = grad_unregularized + grad_regularized
+grad_unregularized = (1/m) * [ transpose(X) * (g - y) ];
+
+theta(1) = 0;
+
+grad_regularized = [ (lambda / m) * theta ];
+
+grad = grad_unregularized + grad_regularized;
 
 
 
