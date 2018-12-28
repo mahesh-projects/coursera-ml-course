@@ -21,12 +21,27 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
+% Add ones to the X data matrix i.e. Bias Unit 
+X = [ones(m, 1) X];
 
+% Input layer a1 is the training examples X
+a1 = X;
+% Hidden layer a2 = sigmoid activation function with Theta1 and inputs from Input layer 
+z2 = a1 * transpose(Theta1);
+a2 = sigmoid(z2); 
 
+% Add bias unit to hidden layer  
+a2 = [ones(m, 1) a2];
 
+% Output layer unit a3 = sigmoid activation function with Theta2 and inputs from Hidden layer 
+z3 = a2 * transpose(Theta2); 
+predict = sigmoid(z3);
 
+% Use max function to return the max element and index of max element
+[predict_max, index_max] = max(predict, [], 2);
 
-
+% Set vector to index_max vector
+p = index_max;
 
 
 % =========================================================================
