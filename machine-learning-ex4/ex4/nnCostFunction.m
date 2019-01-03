@@ -141,12 +141,19 @@ Delta1 = transpose(d2) * a1;
 % Delta2 is the product of d3 and a2. The size is (r x m) ⋅ (m x [h+1]) --> (r x [h+1])
 Delta2 = transpose(d3) * a2;
 
+
+
+% =========================================================================
+% Part 3: Implement regularization with the cost function and gradients.
+% =========================================================================
+
+Theta1(:,1) = 0;
+Theta2(:,1) = 0;
+
 % Theta1_grad and Theta2_grad are the same size as their respective Deltas, just scaled by 1/m
-Theta1_grad = (1/m) * Delta1;
-Theta2_grad = (1/m) * Delta2;
+Theta1_grad = [ (1/m) * Delta1 ] + [ (lambda / m) * Theta1];
+Theta2_grad = [ (1/m) * Delta2 ] + [ (lambda / m) * Theta2];
 
 % Unroll gradients
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
-
-
 end
