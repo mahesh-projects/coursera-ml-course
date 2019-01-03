@@ -147,10 +147,13 @@ Delta2 = transpose(d3) * a2;
 % Part 3: Implement regularization with the cost function and gradients.
 % =========================================================================
 
+% Set the first column of Theta1 and Theta2 to zero before regularization
 Theta1(:,1) = 0;
 Theta2(:,1) = 0;
 
-% Theta1_grad and Theta2_grad are the same size as their respective Deltas, just scaled by 1/m
+% Theta_grad = un-regularized gradient + regularized gradient
+% Un-regularized gradient = Theta1_grad and Theta2_grad are the same size as their respective Deltas, just scaled by 1/m
+% Regularized component = Scale each Theta matrix by lambda/m
 Theta1_grad = [ (1/m) * Delta1 ] + [ (lambda / m) * Theta1];
 Theta2_grad = [ (1/m) * Delta2 ] + [ (lambda / m) * Theta2];
 
