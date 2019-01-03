@@ -61,26 +61,45 @@ Theta2_grad = zeros(size(Theta2));
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 %
+% ============================================
+% Part 1: Vectorized Feedforward implementation to get predictions for all training examples
+% ============================================
+% Reference: https://www.coursera.org/learn/machine-learning/programming/AiHgN/neural-network-learning/discussions/threads/QFnrpQckEeWv5yIAC00Eog
 
+% Expand the 'y' output values into a matrix of single values (see ex4.pdf Page 5)
+y_matrix = eye(num_labels)(y,:);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+% Add column of 1's to the X matrix i.e. Bias Unit 
+X = [ones(m, 1) X];
 
 % -------------------------------------------------------------
+% Perform Foward Propogation for the 3 layered neural network:
+% -------------------------------------------------------------
+% Input layer a1 equals X input matrix with a column of 1's added (bias units) as the first column.
+a1 = X;
+% z2​ equals the product of a1a_1a1​ and Θ1\Theta_1Θ1​
+% Hidden layer a2 = sigmoid activation function. a2​ is the result of passing z2 through g() 
+z2 = a1 * transpose(Theta1);
+a2 = sigmoid(z2); 
+
+% add a column of bias units to a2 (as the first column).
+a2 = [ones(m, 1) a2];
+
+% Output layer a3 = sigmoid activation function. a2​ is the result of passing z3 through g() 
+z3 = a2 * transpose(Theta2); 
+predict = sigmoid(z3); % predicted values stored in predict
+
+% Calculated Unregularized Cost.
+% Remember to use element-wise multiplication with the log() function. For a discussion of why you can't (easily) use matrix multiplication here, see this thread:
+% https://www.coursera.org/learn/machine-learning/discussions/weeks/5/threads/ag_zHUGDEeaXnBKVQldqyw
+% https://www.coursera.org/learn/machine-learning/discussions/all/threads/AzIrrO7wEeaV3gonaJwAFA 
+% Double summation in Octave - Reference http://sachinashanbhag.blogspot.com/2010/02/double-summation-in-gnu-octave-or.html 
+J_unregularized = (1/m) * sum(sum([ (-1 .* y_matrix) .* (log(predict)) - (1 - y_matrix) .* (log(1 - predict)) ]));
+
+% Set J to unregularized cost 
+J = J_unregularized;
+
+
 
 % =========================================================================
 
