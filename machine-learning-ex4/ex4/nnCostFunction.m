@@ -73,7 +73,7 @@ y_matrix = eye(num_labels)(y,:);
 X = [ones(m, 1) X];
 
 % -------------------------------------------------------------
-% Perform Foward Propogation for the 3 layered neural network:
+% Perform Foward Propogation for 3 layered neural network:
 % -------------------------------------------------------------
 % Input layer a1 equals X input matrix with a column of 1's added (bias units) as the first column.
 a1 = X;
@@ -96,12 +96,22 @@ predict = sigmoid(z3); % predicted values stored in predict
 % Double summation in Octave - Reference http://sachinashanbhag.blogspot.com/2010/02/double-summation-in-gnu-octave-or.html 
 J_unregularized = (1/m) * sum(sum([ (-1 .* y_matrix) .* (log(predict)) - (1 - y_matrix) .* (log(1 - predict)) ]));
 
-% Set J to unregularized cost 
-J = J_unregularized;
+% -------------------------------------------------------------
+% Calculate regularization cost
+% -------------------------------------------------------------
 
+% Drop the bias units from Theta1 and Theta2 as we do not regularize bias units
+Theta1_minus_bias = Theta1(:,2:end);
+Theta2_minus_bias = Theta2(:,2:end);
 
+% Use element wise power operator to square Theta1_minus_bias and Theta2_minus_bias
+% Use double summation to sum over 
+J_regularized = (lambda / (2 * m)) * [ sum(sum(Theta1_minus_bias .^ 2)) + sum(sum(Theta2_minus_bias .^ 2)) ];
 
+% Cost J is sum of unregularized and regularized components
+J = J_unregularized + J_regularized;
 % =========================================================================
+
 
 % Unroll gradients
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
