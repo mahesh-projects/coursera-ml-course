@@ -77,7 +77,7 @@ X = [ones(m, 1) X];
 % -------------------------------------------------------------
 % Input layer a1 equals X input matrix with a column of 1's added (bias units) as the first column.
 a1 = X;
-% z2​ equals the product of a1a_1a1​ and Θ1\Theta_1Θ1​
+% z2​ equals the product of a1 and Theta_1
 % Hidden layer a2 = sigmoid activation function. a2​ is the result of passing z2 through g() 
 z2 = a1 * transpose(Theta1);
 a2 = sigmoid(z2); 
@@ -87,14 +87,14 @@ a2 = [ones(m, 1) a2];
 
 % Output layer a3 = sigmoid activation function. a2​ is the result of passing z3 through g() 
 z3 = a2 * transpose(Theta2); 
-predict = sigmoid(z3); % predicted values stored in predict
+a3 = sigmoid(z3); % predicted values stored in predict
 
 % Calculated Unregularized Cost.
 % Remember to use element-wise multiplication with the log() function. For a discussion of why you can't (easily) use matrix multiplication here, see this thread:
 % https://www.coursera.org/learn/machine-learning/discussions/weeks/5/threads/ag_zHUGDEeaXnBKVQldqyw
 % https://www.coursera.org/learn/machine-learning/discussions/all/threads/AzIrrO7wEeaV3gonaJwAFA 
 % Double summation in Octave - Reference http://sachinashanbhag.blogspot.com/2010/02/double-summation-in-gnu-octave-or.html 
-J_unregularized = (1/m) * sum(sum([ (-1 .* y_matrix) .* (log(predict)) - (1 - y_matrix) .* (log(1 - predict)) ]));
+J_unregularized = (1/m) * sum(sum([ (-1 .* y_matrix) .* (log(a3)) - (1 - y_matrix) .* (log(1 - a3)) ]));
 
 % -------------------------------------------------------------
 % Calculate regularization cost
@@ -110,8 +110,40 @@ J_regularized = (lambda / (2 * m)) * [ sum(sum(Theta1_minus_bias .^ 2)) + sum(su
 
 % Cost J is sum of unregularized and regularized components
 J = J_unregularized + J_regularized;
+
+% =========================================================================
+%Part 2: Implement the backpropagation algorithm to compute the gradients
+%         Theta1_grad and Theta2_grad% 
+% Let:
+
+% m = the number of training examples
+
+% n = the number of training features, including the initial bias unit.
+
+% h = the number of units in the hidden layer - NOT including the bias unit
+
+% r = the number of output classifications 
 % =========================================================================
 
+
+
+% Error term (d3) for 3rd layer i.e. output layer is difference between predicted values and actual values
+d3 = a3 - y_matrix;
+
+
+% Error term (d2) for 2nd layer i.e. hidden layer is weighted average of the error terms of the nodes in layer (l + 1)
+% (m x r) ⋅ (r x h) --> (m x h)
+d2 = (d3 * Theta2_minus_bias) .* sigmoidGradient(z2);
+
+% Delta1 is the product of d2 and a1. The size is (h x m) ⋅ (m x n) --> (h x n)
+Delta1 = transpose(d2) * a1;
+
+% Delta2 is the product of d3 and a2. The size is (r x m) ⋅ (m x [h+1]) --> (r x [h+1])
+Delta2 = transpose(d3) * a2;
+
+% Theta1_grad and Theta2_grad are the same size as their respective Deltas, just scaled by 1/m
+Theta1_grad = (1/m) * Delta1;
+Theta2_grad = (1/m) * Delta2;
 
 % Unroll gradients
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
