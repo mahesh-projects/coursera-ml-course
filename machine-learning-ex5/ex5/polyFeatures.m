@@ -15,11 +15,19 @@ X_poly = zeros(numel(X), p);
 %
 % 
 
-
-
-
+for col = 1:p
+    X_poly(:,col) = X(:,1) .^ col;
+end
 
 
 % =========================================================================
 
 end
+
+% Unit Test - just run with "test linearRegCostFunction"
+%!test
+%! A = [2;3;4];
+%! p = 3;
+%! A_poly = polyFeatures(A,p);
+%! A_poly_expected = [2, 4, 8; 3, 9, 27; 4, 16, 64];
+%! assert(A_poly, A_poly_expected);
