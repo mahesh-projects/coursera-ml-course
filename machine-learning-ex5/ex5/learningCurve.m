@@ -53,9 +53,14 @@ error_val   = zeros(m, 1);
 
 % ---------------------- Sample Solution ----------------------
 
+for i = 1:m
+    % Use the lambda passed as parameter to the learningCurve function to find theta
+    theta = trainLinearReg(X(1:i, :), y(1:i), lambda);
+    % Set lambda to zero as explained in Note above
+    [error_train(i), grad_train] = linearRegCostFunction(X(1:i, :), y(1:i), theta, 0);
+    [error_val(i), grad_val] = linearRegCostFunction(Xval, yval, theta, 0);
 
-
-
+end
 
 
 
