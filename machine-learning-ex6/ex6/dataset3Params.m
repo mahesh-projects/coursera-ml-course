@@ -22,11 +22,11 @@ sigma = 0.3;
 %  Note: You can compute the prediction error using 
 %        mean(double(predictions ~= yval))
 %
-C_vec = [0 0.001 0.003 0.01 0.03 0.1 0.3 1 3 10]';
-sigma_vec = [0 0.001 0.003 0.01 0.03 0.1 0.3 1 3 10]';
+%C_vec = [0 0.001 0.003 0.01 0.03 0.1 0.3 1 3 10]';
+%sigma_vec = [0 0.001 0.003 0.01 0.03 0.1 0.3 1 3 10]';
 
-%C_vec = [0.01 0.03]';
-%sigma_vec = [0.01 0.03]';
+C_vec = [0.01 1]';
+sigma_vec = [0.01 0.1]';
 results = [];
 
 %outer loop - iterate through C values
