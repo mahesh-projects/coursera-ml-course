@@ -21,7 +21,19 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
+m = size(X,1);
+centroid_distances = zeros(m, K);
 
+for i = 1:K
+    col_vec = centroid_distances(:, i);
+    % Calculate the differences between each row in X and a centroid
+    diff_matrix = bsxfun(@minus, X, centroids(i,:));
+    % sum of the squares of the differences between each row in the X matrix and a centroid.
+    col_vec = sum(diff_matrix.^2, 2);
+    centroid_distances(:, i) = col_vec;
+end
+
+[min_dist, idx] = min(centroid_distances, [], 2);
 
 
 
