@@ -42,8 +42,13 @@ Theta_grad = zeros(size(Theta));
 
 
 % Cost
-J = (1/2) * sum(sum(((((X * transpose(Theta)) - Y ) .^ 2) .* R) ));
+J_unregularized = (1/2) * sum(sum(((((X * transpose(Theta)) - Y ) .^ 2) .* R) ));
 
+J_reg_movies = (lambda / 2) * sum(sum(X .^ 2));
+
+J_reg_users = (lambda / 2) * sum(sum(Theta .^ 2));
+
+J = J_unregularized + J_reg_movies + J_reg_users;
 % Gradient
 
 % Loop over the movies
@@ -66,7 +71,7 @@ for j = 1:size(R,2)
     X_temp = X(idx, :);
     
     Y_temp = Y(idx, j);
-    
+
     Theta_grad(j, :) =  ((Theta(j, :) * transpose(X_temp)) - transpose(Y_temp)) * X_temp;
 end
 
