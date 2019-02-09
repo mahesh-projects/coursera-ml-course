@@ -41,16 +41,50 @@ Theta_grad = zeros(size(Theta));
 %
 
 
-
+% Cost
 J = (1/2) * sum(sum(((((X * transpose(Theta)) - Y ) .^ 2) .* R) ));
 
+% Gradient
+
+% Loop over the movies
+for i = 1:size(R,1)
+
+    idx = find(R(i, :)==1);
+
+    Theta_temp = Theta(idx, :);
+
+    Y_temp = Y(i, idx);
+
+    X_grad(i,:) = ((X(i, :) * transpose(Theta_temp)) - Y_temp) * Theta_temp;
+
+end
+
+%Loop over the users
+for j = 1:size(R,2)
+    idx = find(R(:, j)==1);
+    
+    X_temp = X(idx, :);
+    
+    Y_temp = Y(idx, j);
+    
+   % Theta_grad(j,:) =  ((X(i, :) * transpose(Theta_temp)) - Y_temp) * X_temp;
+    Theta_grad(j, :) =  ((Theta(j, :) * transpose(X_temp)) - transpose(Y_temp)) * X_temp;
+end
 
 
+% for j = 1:size(R,2)
+%     idx = find(R(j, :)==1);
+%     Theta_temp = Theta(idx, :);
+%     X_temp = X(j, idx);
+    
+%     Y_temp = Y(j, idx);
+    
+%   %  Theta_grad(j,:) =  ((Theta(j, :) * transpose(X_temp)) - Y_temp) * X_temp;
+%       Theta_grad(j,:) =  ((X(i, :) * transpose(Theta_temp)) - Y_temp) * X_temp;
 
-
-
-
-
+% end
+    
+%Theta_grad =   sum(((Theta * transpose(X)) - transpose(Y)) * X);
 
 
 
