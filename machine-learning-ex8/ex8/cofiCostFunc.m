@@ -60,7 +60,10 @@ for i = 1:size(R,1)
 
     Y_temp = Y(i, idx);
 
-    X_grad(i,:) = ((X(i, :) * transpose(Theta_temp)) - Y_temp) * Theta_temp;
+    %regularization term
+    reg_term = lambda * X(i, :);
+
+    X_grad(i,:) = [ ((X(i, :) * transpose(Theta_temp)) - Y_temp) * Theta_temp ] + reg_term;
 
 end
 
@@ -72,7 +75,10 @@ for j = 1:size(R,2)
     
     Y_temp = Y(idx, j);
 
-    Theta_grad(j, :) =  ((Theta(j, :) * transpose(X_temp)) - transpose(Y_temp)) * X_temp;
+    %regularization term
+    reg_term = lambda * Theta(j, :);
+
+    Theta_grad(j, :) = [ ((Theta(j, :) * transpose(X_temp)) - transpose(Y_temp)) * X_temp ] + reg_term;
 end
 
 % =============================================================
